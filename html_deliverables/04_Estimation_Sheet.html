@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Software Effort & Duration Estimation Sheet</title>
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #ffffff;
+    color: #1f2937;
+    line-height: 1.55;
+    font-size: 11pt;
+    padding: 0;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 18mm 16mm 18mm 16mm;
+  }
+
+  /* Document Header & Title */
+  .doc-header {
+    border-bottom: 2px solid #1e40af;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+  }
+
+  .doc-tag {
+    font-size: 9pt;
+    font-weight: 700;
+    color: #2563eb;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 4px;
+  }
+
+  h1 {
+    font-size: 20pt;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+
+  .doc-meta {
+    font-size: 9.5pt;
+    color: #64748b;
+    line-height: 1.4;
+  }
+
+  /* Headings */
+  h2 {
+    font-size: 13.5pt;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e2e8f0;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  h3 {
+    font-size: 11.5pt;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  h4 {
+    font-size: 10.5pt;
+    font-weight: 600;
+    color: #334155;
+    margin-top: 10px;
+    margin-bottom: 4px;
+  }
+
+  p {
+    margin-bottom: 10px;
+    text-align: justify;
+  }
+
+  ul, ol {
+    margin-left: 20px;
+    margin-bottom: 12px;
+  }
+
+  li {
+    margin-bottom: 4px;
+  }
+
+  strong {
+    color: #0f172a;
+    font-weight: 600;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 16px 0;
+    font-size: 9pt;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  th {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-weight: 700;
+    text-align: left;
+    padding: 7px 9px;
+    border: 1px solid #cbd5e1;
+  }
+
+  td {
+    padding: 6px 9px;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f8fafc;
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 7.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .badge-must { background-color: #fee2e2; color: #991b1b; border: 1px solid #f87171; }
+  .badge-should { background-color: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+  .badge-could { background-color: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+  .badge-pass { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; }
+  .badge-crit { background-color: #ffe4e6; color: #9f1239; border: 1px solid #fda4af; }
+
+  /* Callout & Formula Boxes */
+  .callout {
+    background-color: #f8fafc;
+    border-left: 4px solid #2563eb;
+    padding: 10px 14px;
+    margin: 12px 0 16px 0;
+    border-radius: 0 4px 4px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .callout-title {
+    font-weight: 700;
+    color: #1e40af;
+    font-size: 9.5pt;
+    margin-bottom: 4px;
+  }
+
+  .formula-box {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin: 10px 0;
+    font-size: 9pt;
+    color: #0f172a;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  code {
+    font-family: 'Fira Code', monospace;
+    background-color: #f1f5f9;
+    color: #1e40af;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 8.5pt;
+  }
+
+  /* Diagrams */
+  .diagram-wrapper {
+    text-align: center;
+    margin: 14px 0 18px 0;
+    padding: 8px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .diagram-wrapper img {
+    max-width: 95%;
+    max-height: 320px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .diagram-caption {
+    font-size: 8.5pt;
+    color: #64748b;
+    font-weight: 600;
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  /* Summary Grid */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 12px 0 16px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .summary-card {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 8px 10px;
+    text-align: center;
+  }
+
+  .summary-card .val {
+    font-size: 14pt;
+    font-weight: 800;
+    color: #1e40af;
+  }
+
+  .summary-card .lbl {
+    font-size: 7.5pt;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+  <div class="doc-header">
+    <div class="doc-tag">SalesLens Enterprise BI Platform &bull; Academic Deliverable DOC-04</div>
+    <h1>Software Effort & Duration Estimation Sheet</h1>
+    <div class="doc-meta">Course: B.Tech CSE Semester III &bull; Software Engineering & Project Management &bull; Version 1.0</div>
+  </div>
+  
+    <h2>1. Primary Mathematical Formulas & Parameters</h2>
+    <div class="formula-box">
+      <strong>Total Effort Equation ($E$):</strong> $E = E_{\text{cleaning}} + E_{\text{views}} + E_{\text{testing}} + E_{\text{overhead}}$<br>
+      <strong>Effective Daily Team Capacity ($C$):</strong> $C = \text{FTE}_{\text{BI}} (1.0) + \text{FTE}_{\text{Analyst}} (0.5) = \mathbf{1.50 \text{ Person-Days / Working Day}}$<br>
+      <strong>Project Duration:</strong> $D = E / C$ (Days) &bull; $W = D / 5$ (Weeks)<br>
+      <strong>Feasibility Condition:</strong> Feasible if $W \le W_{\text{deadline}} = 8.00 \text{ Weeks}$ ($D \le 40.0 \text{ Working Days}$)
+    </div>
+
+    <h2>2. Comparative Mathematical Evaluation: 9-View vs. 26-Report Scope</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric / Parameter</th>
+          <th>9-View In-Scope Dashboard (Chosen)</th>
+          <th>Full 26-Report Legacy Scope (Rejected)</th>
+          <th>Academic Rationale / Impact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Number of Views ($N$)</strong></td>
+          <td><span class="badge badge-pass">9 Views</span></td>
+          <td><span class="badge badge-crit">26 Reports</span></td>
+          <td>Scope pruned by 65% based on 80/20 rule</td>
+        </tr>
+        <tr>
+          <td><strong>Effort per View ($e_v$)</strong></td>
+          <td>3.0 Person-Days</td>
+          <td>3.0 Person-Days</td>
+          <td>Standardized UI charting templates</td>
+        </tr>
+        <tr>
+          <td><strong>View Build Effort ($E_v$)</strong></td>
+          <td><strong>27.0 Person-Days</strong></td>
+          <td><strong>78.0 Person-Days</strong></td>
+          <td>Saved 51.0 Person-Days of engineering</td>
+        </tr>
+        <tr>
+          <td><strong>14% Data Cleaning ($E_c$)</strong></td>
+          <td>8.0 Person-Days</td>
+          <td>8.0 Person-Days</td>
+          <td>Fixed complexity for 4-tier decision table</td>
+        </tr>
+        <tr>
+          <td><strong>Verification & QA ($E_t$)</strong></td>
+          <td>5.0 Person-Days</td>
+          <td>5.0 Person-Days</td>
+          <td>BVA, decision tables & DRE testing</td>
+        </tr>
+        <tr style="background-color: #f1f5f9;">
+          <td><strong>TOTAL EFFORT ($E$)</strong></td>
+          <td><strong style="color: #1e40af; font-size: 11pt;">40.0 Person-Days</strong></td>
+          <td><strong style="color: #991b1b; font-size: 11pt;">91.0 Person-Days</strong></td>
+          <td><strong>56.0% Overall Effort Reduction</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Working Days Duration ($D$)</strong></td>
+          <td><strong>26.67 Working Days</strong></td>
+          <td><strong>60.67 Working Days</strong></td>
+          <td>Calculated as $E / 1.5 \text{ PD/day}$</td>
+        </tr>
+        <tr>
+          <td><strong>Duration in Calendar Weeks ($W$)</strong></td>
+          <td><strong>5.33 Weeks ($approx 5.4$)</strong></td>
+          <td><strong>12.13 Weeks ($approx 12.2$)</strong></td>
+          <td>Calculated as $D / 5 \text{ days/week}$</td>
+        </tr>
+        <tr>
+          <td><strong>Target Deadline ($W_{\text{target}}$)</strong></td>
+          <td>8.00 Weeks (40 Days)</td>
+          <td>8.00 Weeks (40 Days)</td>
+          <td>Annual Sales Conference Milestone</td>
+        </tr>
+        <tr style="background-color: #f8fafc;">
+          <td><strong>Variance to Deadline ($Delta$)</strong></td>
+          <td><span class="badge badge-pass">+2.67 WEEKS BUFFER</span></td>
+          <td><span class="badge badge-crit">-4.13 WEEKS OVERDUE</span></td>
+          <td>9-View solution leaves 33% safety buffer</td>
+        </tr>
+        <tr>
+          <td><strong>Feasibility Status</strong></td>
+          <td><span class="badge badge-pass">PASSED (100% FEASIBLE)</span></td>
+          <td><span class="badge badge-crit">FAILED (UNVIABLE)</span></td>
+          <td>Pruned scope guarantees conference success</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3. Step-by-Step Intermediate Calculations</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;">
+      <div class="callout">
+        <div class="callout-title">Scenario A: 9-View Baseline (Target Solution)</div>
+        <p>1. <strong>View Effort:</strong> $9 \text{ views} \times 3.0 \text{ PD} = 27.0 \text{ PD}$</p>
+        <p>2. <strong>Total Effort:</strong> $8.0 (\text{Clean}) + 27.0 (\text{Views}) + 5.0 (\text{QA}) = \mathbf{40.0 \text{ PD}}$</p>
+        <p>3. <strong>Working Days:</strong> $D = 40.0 / 1.5 = \mathbf{26.67 \text{ Days}}$</p>
+        <p>4. <strong>Calendar Weeks:</strong> $W = 26.67 / 5 = \mathbf{5.33 \text{ Weeks}}$</p>
+        <p>5. <strong>Reserve Buffer:</strong> $8.00 - 5.33 = \mathbf{+2.67 \text{ Weeks (13.3 Days)}}$</p>
+        <p style="color: #166534; font-weight: 600;">&check; Healthy 33% buffer absorbs edge-case anomalies.</p>
+      </div>
+
+      <div class="callout" style="border-left-color: #ef4444;">
+        <div class="callout-title" style="color: #991b1b;">Scenario B: 26-Report Legacy (Why it was Rejected)</div>
+        <p>1. <strong>View Effort:</strong> $26 \text{ reports} \times 3.0 \text{ PD} = 78.0 \text{ PD}$</p>
+        <p>2. <strong>Total Effort:</strong> $8.0 (\text{Clean}) + 78.0 (\text{Views}) + 5.0 (\text{QA}) = \mathbf{91.0 \text{ PD}}$</p>
+        <p>3. <strong>Working Days:</strong> $D = 91.0 / 1.5 = \mathbf{60.67 \text{ Days}}$</p>
+        <p>4. <strong>Calendar Weeks:</strong> $W = 60.67 / 5 = \mathbf{12.13 \text{ Weeks}}$</p>
+        <p>5. <strong>Schedule Deficit:</strong> $8.00 - 12.13 = \mathbf{-4.13 \text{ Weeks (Overdue by 21 Days)}}$</p>
+        <p style="color: #991b1b; font-weight: 600;">&cross; Misses the annual sales conference by a month.</p>
+      </div>
+    </div>
+
+    <h2>4. Software Engineering Principles in Estimation</h2>
+    <ul>
+      <li><strong>Cone of Uncertainty (Boehm & McConnell):</strong> At inception, estimation variance spans $0.25\times$ to $4.0\times$. Freezing the 9 views in Week 1 and locking the 4-tier decision table narrows uncertainty to $\pm 10\%$.</li>
+      <li><strong>Brooks' Law (The Mythical Man-Month):</strong> <em>"Adding manpower to a late software project makes it later."</em> Introducing additional personnel midway adds communication overhead without speeding up sequential ETL data cleaning logic.</li>
+      <li><strong>Parkinson's Law:</strong> Work expands to fill available time. We counteract this through weekly working prototype demos with the Sales Director every Friday.</li>
+      <li><strong>Murphy's Law in Legacy Pipelines:</strong> The 2.67-week buffer explicitly protects against unexpected legacy data quirks (e.g. malformed postal codes, foreign customer addresses).</li>
+    </ul>
+  
+</body>
+</html>

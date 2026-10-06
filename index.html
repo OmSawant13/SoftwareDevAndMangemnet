@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SalesLens — Unified Sales Reporting & SEPM Engineering Platform</title>
+  <meta name="description" content="SalesLens Enterprise Sales Reporting Dashboard & Complete B.Tech CSE SEPM Project Submission.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-dark">
+  <div class="app-container">
+    
+    <!-- TOP NAVIGATION BAR -->
+    <header class="top-nav">
+      <div class="nav-left">
+        <div class="brand-logo">
+          <div class="logo-icon"><i class="fa-solid fa-chart-line"></i></div>
+          <div class="brand-text">
+            <span class="brand-name">Sales<span class="brand-highlight">Lens</span></span>
+            <span class="brand-tag">Consumer Goods Distribution BI</span>
+          </div>
+        </div>
+        <div class="academic-badge">
+          <i class="fa-solid fa-graduation-cap"></i> B.Tech CSE SEPM Final Project
+        </div>
+      </div>
+
+      <div class="nav-center">
+        <div class="role-selector-container">
+          <label for="roleSelector"><i class="fa-solid fa-user-shield"></i> Role Simulation (RBAC):</label>
+          <select id="roleSelector" class="form-select">
+            <option value="director">👑 Sales Director (National Visibility)</option>
+            <option value="manager_north">👔 North Regional Manager</option>
+            <option value="manager_south">👔 South Regional Manager</option>
+            <option value="analyst">🔬 Senior Data Analyst (Audit / Gov)</option>
+            <option value="it_admin">⚙️ IT Systems Administrator</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="nav-right">
+        <div class="status-indicator live">
+          <span class="pulse-dot"></span>
+          <span id="pipelineStatusText">Daily ETL: Completed 05:45 AM (Clean)</span>
+        </div>
+        <button id="exportBriefingBtn" class="btn btn-outline" title="Export Executive Summary">
+          <i class="fa-solid fa-file-pdf"></i> Export Briefing
+        </button>
+        <button id="themeToggleBtn" class="btn btn-icon" title="Toggle Theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-layout">
+      
+      <!-- SIDEBAR NAVIGATION -->
+      <aside class="sidebar">
+        <div class="sidebar-section-title">EXECUTIVE DASHBOARD (9 VIEWS)</div>
+        <nav class="sidebar-nav">
+          <button class="nav-item active" data-tab="tab-overview">
+            <i class="fa-solid fa-gauge-high"></i>
+            <span>1. Executive Daily Pulse</span>
+          </button>
+          <button class="nav-item" data-tab="tab-quota">
+            <i class="fa-solid fa-bullseye"></i>
+            <span>2. Target vs Actual Quotas</span>
+          </button>
+          <button class="nav-item" data-tab="tab-products">
+            <i class="fa-solid fa-cubes-stacked"></i>
+            <span>3 & 4. Top & Bottom SKUs</span>
+          </button>
+          <button class="nav-item" data-tab="tab-regions">
+            <i class="fa-solid fa-map-location-dot"></i>
+            <span>5 & 6. Regional Matrix & Drill</span>
+          </button>
+          <button class="nav-item" data-tab="tab-categories">
+            <i class="fa-solid fa-pie-chart"></i>
+            <span>7 & 8. Category & Channels</span>
+          </button>
+          <button class="nav-item" data-tab="tab-data-quality">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>9. 14% Data Cleaning & Audit</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-section-title mt-4">SEPM ACADEMIC DELIVERABLES</div>
+        <nav class="sidebar-nav">
+          <button class="nav-item sepm-nav" data-tab="tab-srs">
+            <i class="fa-solid fa-file-lines"></i>
+            <span>IEEE 830 SRS & MoSCoW</span>
+          </button>
+          <button class="nav-item sepm-nav" data-tab="tab-uml">
+            <i class="fa-solid fa-diagram-project"></i>
+            <span>UML Diagrams & Cohesion</span>
+          </button>
+          <button class="nav-item sepm-nav" data-tab="tab-cpm">
+            <i class="fa-solid fa-network-wired"></i>
+            <span>Project Plan, CPM & Gantt</span>
+          </button>
+          <button class="nav-item sepm-nav" data-tab="tab-estimation">
+            <i class="fa-solid fa-calculator"></i>
+            <span>Estimation (9 vs 26 Views)</span>
+          </button>
+          <button class="nav-item sepm-nav" data-tab="tab-testing">
+            <i class="fa-solid fa-vial-circle-check"></i>
+            <span>Testing, BVA, DRE & Metrics</span>
+          </button>
+          <button class="nav-item sepm-nav" data-tab="tab-risks">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>Risk Register & RMMM</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="deadline-timer">
+            <div class="deadline-title"><i class="fa-solid fa-clock"></i> Conference Deadline</div>
+            <div class="deadline-val">8 Weeks (40 Working Days)</div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="width: 67%;"></div>
+            </div>
+            <div class="deadline-sub">9 Views: 5.4 Wks | 2.6 Wk Buffer</div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- CONTENT VIEWPORT -->
+      <main class="content-viewport">
+        
+        <!-- GLOBAL FILTER BAR (Present on analytical views) -->
+        <div class="filter-strip" id="filterStrip">
+          <div class="filter-group">
+            <label><i class="fa-regular fa-calendar"></i> Date Interval:</label>
+            <select id="dateRangeFilter" class="filter-select">
+              <option value="mtd" selected>Month-To-Date (October 2026)</option>
+              <option value="qtd">Q3 FY2026 (July - Sept)</option>
+              <option value="ytd">Year-To-Date (FY2026)</option>
+              <option value="custom">Custom Date Range...</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label><i class="fa-solid fa-location-dot"></i> Territory Zone:</label>
+            <select id="regionFilter" class="filter-select">
+              <option value="ALL" selected>All Territories (National)</option>
+              <option value="North">North Zone (Delhi, UP, Punjab)</option>
+              <option value="South">South Zone (Karnataka, TN, Kerala)</option>
+              <option value="East">East Zone (WB, Bihar, Odisha)</option>
+              <option value="West">West Zone (MH, Gujarat, Goa)</option>
+              <option value="Central">Central Zone (MP, CG)</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label><i class="fa-solid fa-tags"></i> Category:</label>
+            <select id="categoryFilter" class="filter-select">
+              <option value="ALL" selected>All Categories</option>
+              <option value="Beverages">Beverages</option>
+              <option value="Packaged Foods">Packaged Foods</option>
+              <option value="Personal Care">Personal Care</option>
+              <option value="Home Care">Home Care</option>
+              <option value="Dairy">Dairy Products</option>
+            </select>
+          </div>
+
+          <button id="applyFiltersBtn" class="btn btn-primary">
+            <i class="fa-solid fa-filter"></i> Apply Filters
+          </button>
+          <button id="resetFiltersBtn" class="btn btn-secondary">
+            <i class="fa-solid fa-arrow-rotate-left"></i>
+          </button>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 1: EXECUTIVE DAILY SALES PULSE (VIEW 1) -->
+        <!-- ========================================================================= -->
+        <div class="tab-pane active" id="tab-overview">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-gauge-high text-primary"></i> View 1: Executive Daily Sales Pulse</h2>
+              <p class="view-desc">Automated overnight aggregation of settled transactions, replacing legacy 40-page static PDFs.</p>
+            </div>
+            <div class="badge-pill bg-success">
+              <i class="fa-solid fa-circle-check"></i> Reconciled: 99.98% Accuracy
+            </div>
+          </div>
+
+          <!-- KPI Metric Cards -->
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-label">Total Actual Sales (MTD)</span>
+                <span class="kpi-icon icon-revenue"><i class="fa-solid fa-dollar-sign"></i></span>
+              </div>
+              <div class="kpi-value" id="kpiRevenue">$4,852,400</div>
+              <div class="kpi-footer text-success">
+                <i class="fa-solid fa-arrow-trend-up"></i> +12.4% vs last month
+              </div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-label">Sales Target Attainment</span>
+                <span class="kpi-icon icon-target"><i class="fa-solid fa-bullseye"></i></span>
+              </div>
+              <div class="kpi-value" id="kpiAttainment">97.05%</div>
+              <div class="kpi-footer text-warning">
+                <i class="fa-solid fa-clock"></i> Pacing Target: $5,000,000
+              </div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-label">Total Volume (Cases Sold)</span>
+                <span class="kpi-icon icon-volume"><i class="fa-solid fa-boxes-stacked"></i></span>
+              </div>
+              <div class="kpi-value" id="kpiVolume">348,920</div>
+              <div class="kpi-footer text-success">
+                <i class="fa-solid fa-arrow-trend-up"></i> +8.1% volume velocity
+              </div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-label">Data Cleaning Health (14% Rule)</span>
+                <span class="kpi-icon icon-health"><i class="fa-solid fa-shield-check"></i></span>
+              </div>
+              <div class="kpi-value" id="kpiDataHealth">99.7% Resolved</div>
+              <div class="kpi-footer text-info">
+                <i class="fa-solid fa-database"></i> 0.3% in Audit Queue
+              </div>
+            </div>
+          </div>
+
+          <!-- Daily Pacing & Trend Charts -->
+          <div class="charts-grid-2">
+            <div class="card chart-card">
+              <div class="card-header">
+                <span class="card-title"><i class="fa-solid fa-chart-line"></i> Daily Sales Pacing vs Monthly Target Pacing ($)</span>
+                <span class="badge-mini">Real-Time Aggregation</span>
+              </div>
+              <div class="chart-container">
+                <canvas id="dailySalesChart"></canvas>
+              </div>
+            </div>
+
+            <div class="card chart-card">
+              <div class="card-header">
+                <span class="card-title"><i class="fa-solid fa-chart-pie"></i> Revenue Share by Territory Zone</span>
+                <span class="badge-mini">5 Regions</span>
+              </div>
+              <div class="chart-container">
+                <canvas id="regionPieChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 2: TARGET VS ACTUAL QUOTAS (VIEW 2) -->
+        <!-- ========================================================================= -->
+        <div class="tab-pane" id="tab-quota">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-bullseye text-primary"></i> View 2: Target vs. Actual Quota Attainment</h2>
+              <p class="view-desc">Regional variance breakdown, attainment tracking, and compensation quota pacing.</p>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-header">
+              <span class="card-title">Territory Zone Quota Scorecard</span>
+              <span class="badge-mini">Target: $5,000,000 National</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table" id="quotaTable">
+                <thead>
+                  <tr>
+                    <th>Territory Region</th>
+                    <th>Target Quota ($)</th>
+                    <th>Actual Sales ($)</th>
+                    <th>Variance ($)</th>
+                    <th>Attainment %</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="quotaTableBody">
+                  <!-- Populated via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card chart-card">
+            <div class="card-header">
+              <span class="card-title"><i class="fa-solid fa-chart-column"></i> Target vs. Actual Comparison by Zone</span>
+            </div>
+            <div class="chart-container" style="height: 320px;">
+              <canvas id="quotaBarChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 3: TOP & BOTTOM PRODUCT SKUS (VIEWS 3 & 4) -->
+        <!-- ========================================================================= -->
+        <div class="tab-pane" id="tab-products">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-cubes-stacked text-primary"></i> Views 3 & 4: Top 20 & Bottom 10 Product SKUs</h2>
+              <p class="view-desc">Identify revenue drivers (80/20 rule) and underperforming inventory for sales promotions.</p>
+            </div>
+          </div>
+
+          <div class="grid-2-cols">
+            <div class="card">
+              <div class="card-header bg-highlight-green">
+                <span class="card-title"><i class="fa-solid fa-trophy text-warning"></i> Top Revenue Driving SKUs</span>
+                <span class="badge-pill bg-success">High Velocity</span>
+              </div>
+              <div class="table-responsive" style="max-height: 400px;">
+                <table class="data-table compact-table" id="topProductsTable">
+                  <thead>
+                    <tr>
+                      <th>Rank</th>
+                      <th>SKU Code & Name</th>
+                      <th>Category</th>
+                      <th>Revenue ($)</th>
+                      <th>Margin %</th>
+                    </tr>
+                  </thead>
+                  <tbody id="topProductsBody">
+                    <!-- Populated via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header bg-highlight-red">
+                <span class="card-title"><i class="fa-solid fa-triangle-exclamation text-danger"></i> Bottom 10 Underperforming SKUs</span>
+                <span class="badge-pill bg-danger">Action Required</span>
+              </div>
+              <div class="table-responsive" style="max-height: 400px;">
+                <table class="data-table compact-table" id="bottomProductsTable">
+                  <thead>
+                    <tr>
+                      <th>SKU Code & Name</th>
+                      <th>Category</th>
+                      <th>Revenue ($)</th>
+                      <th>Days on Shelf</th>
+                      <th>Recommended Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bottomProductsBody">
+                    <!-- Populated via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 4: REGIONAL MATRIX & DRILL-DOWN (VIEWS 5 & 6) -->
+        <!-- ========================================================================= -->
+        <div class="tab-pane" id="tab-regions">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-map-location-dot text-primary"></i> Views 5 & 6: Regional Matrix & Territory Deep-Dive</h2>
+              <p class="view-desc">Comparative multi-region performance matrix and granular sub-distributor territory breakdown.</p>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-header">
+              <span class="card-title">Regional Performance Matrix (North, South, East, West, Central)</span>
+              <span class="badge-mini">5-Zone Benchmark</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table" id="regionalMatrixTable">
+                <thead>
+                  <tr>
+                    <th>Region Name</th>
+                    <th>Regional Manager</th>
+                    <th>Active Accounts</th>
+                    <th>Total MTD Sales</th>
+                    <th>YoY Growth</th>
+                    <th>Avg Order Value</th>
+                    <th>Performance Tier</th>
+                  </tr>
+                </thead>
+                <tbody id="regionalMatrixBody">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card chart-card">
+            <div class="card-header">
+              <span class="card-title"><i class="fa-solid fa-chart-area"></i> Monthly Growth Pacing by Region ($)</span>
+            </div>
+            <div class="chart-container" style="height: 300px;">
+              <canvas id="regionalTrendChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 5: CATEGORY & CHANNELS (VIEWS 7 & 8) -->
+        <!-- ========================================================================= -->
+        <div class="tab-pane" id="tab-categories">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-pie-chart text-primary"></i> Views 7 & 8: Category & Channel Distribution</h2>
+              <p class="view-desc">Product portfolio composition and distribution channel sales split.</p>
+            </div>
+          </div>
+
+          <div class="charts-grid-2">
+            <div class="card chart-card">
+              <div class="card-header">
+                <span class="card-title">View 7: Revenue by Product Category</span>
+              </div>
+              <div class="chart-container">
+                <canvas id="categoryChart"></canvas>
+              </div>
+            </div>
+
+            <div class="card chart-card">
+              <div class="card-header">
+                <span class="card-title">View 8: Channel Distribution Mix</span>
+              </div>
+              <div class="chart-container">
+                <canvas id="channelChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 6: DATA QUALITY & 14% CLEANING AUDIT CONSOLE (VIEW 9) -->
+        <!-- ========================================================================= -->
+        <div class="tab-pane" id="tab-data-quality">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-wand-magic-sparkles text-primary"></i> View 9: 14% Missing Region Data Cleaning & Audit Engine</h2>
+              <p class="view-desc">Automated 4-tier decision table resolution engine resolving legacy billing data inconsistencies.</p>
+            </div>
+            <div class="badge-pill bg-primary">
+              <i class="fa-solid fa-code-compare"></i> 4-Tier Decision Engine Active
+            </div>
+          </div>
+
+          <!-- Resolution Summary Cards -->
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-header"><span class="kpi-label">Total Daily Transactions</span><i class="fa-solid fa-receipt"></i></div>
+              <div class="kpi-value">50,000</div>
+              <div class="kpi-footer text-muted">100% Ingested</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-header"><span class="kpi-label">Native Region Present (86%)</span><i class="fa-solid fa-circle-check text-success"></i></div>
+              <div class="kpi-value text-success">43,000</div>
+              <div class="kpi-footer text-success">Direct Pass-Through</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-header"><span class="kpi-label">Missing Region Fixed (13.7%)</span><i class="fa-solid fa-wand-magic text-primary"></i></div>
+              <div class="kpi-value text-primary">6,850</div>
+              <div class="kpi-footer text-primary">Resolved via Rules 2-4</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-header"><span class="kpi-label">Unassigned Audit Queue (0.3%)</span><i class="fa-solid fa-triangle-exclamation text-warning"></i></div>
+              <div class="kpi-value text-warning">150</div>
+              <div class="kpi-footer text-warning">Manual Review Queue</div>
+            </div>
+          </div>
+
+          <!-- Interactive Rule Tester Simulator -->
+          <div class="card mb-4">
+            <div class="card-header">
+              <span class="card-title"><i class="fa-solid fa-microchip"></i> Live 4-Tier Decision Table Simulator</span>
+              <span class="badge-mini">Interactive Test Harness</span>
+            </div>
+            <div class="card-body">
+              <p class="text-sm mb-3">Test how the automated cleaning pipeline processes raw legacy billing records missing region codes:</p>
+              
+              <div class="simulator-controls">
+                <button class="btn btn-outline btn-sm sample-btn" data-sample="postal">
+                  Sample A: Missing Region + Valid Postal (110001)
+                </button>
+                <button class="btn btn-outline btn-sm sample-btn" data-sample="customer">
+                  Sample B: Missing Region + Missing Postal + Customer ID (CUST-4091)
+                </button>
+                <button class="btn btn-outline btn-sm sample-btn" data-sample="rep">
+                  Sample C: Missing Region & Postal + Sales Rep (REP-WEST-09)
+                </button>
+                <button class="btn btn-outline btn-sm sample-btn" data-sample="orphan">
+                  Sample D: Complete Orphan (All Identifiers Missing)
+                </button>
+              </div>
+
+              <div class="simulator-box mt-3">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Tx ID:</label>
+                    <input type="text" id="simTxId" class="form-control" value="TX-98421" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label>Raw Region Code:</label>
+                    <input type="text" id="simRawRegion" class="form-control" value="[NULL / MISSING]">
+                  </div>
+                  <div class="form-group">
+                    <label>Postal Code:</label>
+                    <input type="text" id="simPostal" class="form-control" value="110001">
+                  </div>
+                  <div class="form-group">
+                    <label>Customer ID:</label>
+                    <input type="text" id="simCustId" class="form-control" value="CUST-4091">
+                  </div>
+                  <div class="form-group">
+                    <label>Sales Rep ID:</label>
+                    <input type="text" id="simRepId" class="form-control" value="REP-NORTH-04">
+                  </div>
+                </div>
+
+                <div class="mt-3 d-flex gap-2">
+                  <button id="runSimBtn" class="btn btn-primary">
+                    <i class="fa-solid fa-play"></i> Execute Cleaning Rule Engine
+                  </button>
+                </div>
+
+                <div class="sim-result-box mt-3" id="simResultBox">
+                  <div class="sim-result-header">
+                    <span id="simStatusBadge" class="badge-pill bg-success">Ready to Evaluate</span>
+                    <span id="simRuleApplied" class="text-sm font-mono">Rule: Awaiting execution</span>
+                  </div>
+                  <div class="sim-result-body" id="simResultDetails">
+                    Click "Execute Cleaning Rule Engine" to trace the decision hierarchy.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Audit Log Table -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title"><i class="fa-solid fa-list-check"></i> Recent Automated Transformation Audit Log</span>
+              <span class="badge-mini">100% Traceability</span>
+            </div>
+            <div class="table-responsive" style="max-height: 320px;">
+              <table class="data-table compact-table">
+                <thead>
+                  <tr>
+                    <th>Tx ID</th>
+                    <th>Invoice Date</th>
+                    <th>Amount ($)</th>
+                    <th>Raw Input Region</th>
+                    <th>Resolution Rule Applied</th>
+                    <th>Assigned Clean Region</th>
+                    <th>Confidence</th>
+                  </tr>
+                </thead>
+                <tbody id="auditLogTableBody">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- SEPM TAB 1: IEEE 830 SRS & MOSCOW -->
+        <!-- ========================================================================= -->
+        <div class="tab-pane" id="tab-srs">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-file-lines text-primary"></i> IEEE 830 Software Requirements Specification (SRS)</h2>
+              <p class="view-desc">Formal requirement elicitation, 10 Functional Requirements, 7 Measurable NFRs, and MoSCoW Prioritization.</p>
+            </div>
+            <a href="docs/01_IEEE_830_SRS.md" target="_blank" class="btn btn-outline btn-sm">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Full SRS Markdown
+            </a>
+          </div>
+
+          <!-- Measurable NFRs Table -->
+          <div class="card mb-4">
+            <div class="card-header bg-highlight-blue">
+              <span class="card-title"><i class="fa-solid fa-ruler-combined"></i> 7 Measurable Non-Functional Requirements (NFRs)</span>
+              <span class="badge-pill bg-info">Zero Ambiguity</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Quality Attribute</th>
+                    <th>Target Quantitative Metric</th>
+                    <th>Verification Protocol</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>NFR-01</strong></td>
+                    <td>Data Accuracy</td>
+                    <td><span class="badge-pill bg-success">&ge; 99.90% Accuracy</span> (&le; $10 variance per $1M)</td>
+                    <td>Automated reconciliation script comparing clean DW vs settled billing</td>
+                  </tr>
+                  <tr>
+                    <td><strong>NFR-02</strong></td>
+                    <td>ETL Refresh Window</td>
+                    <td><span class="badge-pill bg-success">&le; 15 Minutes</span> (Completed before 06:00 AM)</td>
+                    <td>CloudWatch / Cron job timestamp monitoring</td>
+                  </tr>
+                  <tr>
+                    <td><strong>NFR-03</strong></td>
+                    <td>UI Query Latency</td>
+                    <td><span class="badge-pill bg-success">P95 &le; 1.50s</span> (Max cold load &le; 3.0s)</td>
+                    <td>Lighthouse APM synthetic load benchmark</td>
+                  </tr>
+                  <tr>
+                    <td><strong>NFR-04</strong></td>
+                    <td>Security & RBAC</td>
+                    <td><span class="badge-pill bg-success">0 Unauthorized Row Leaks</span> (100% JWT auth)</td>
+                    <td>Automated cross-region penetration test assertions</td>
+                  </tr>
+                  <tr>
+                    <td><strong>NFR-05</strong></td>
+                    <td>System Availability</td>
+                    <td><span class="badge-pill bg-success">&ge; 99.50% Uptime</span> (06:00-22:00 Mon-Sat)</td>
+                    <td>Pingdom uptime SLA telemetry</td>
+                  </tr>
+                  <tr>
+                    <td><strong>NFR-06</strong></td>
+                    <td>Concurrency</td>
+                    <td><span class="badge-pill bg-success">&ge; 50 Active Users</span> without &gt;10% latency rise</td>
+                    <td>JMeter 50-thread ramp-up load stress test</td>
+                  </tr>
+                  <tr>
+                    <td><strong>NFR-07</strong></td>
+                    <td>Disaster Recovery</td>
+                    <td><span class="badge-pill bg-success">RPO &le; 24h, RTO &le; 60 mins</span></td>
+                    <td>Daily snapshot recovery drill</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 10 Functional Requirements -->
+          <div class="card mb-4">
+            <div class="card-header">
+              <span class="card-title">10 Functional Requirements with MoSCoW Prioritization</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table compact-table">
+                <thead>
+                  <tr>
+                    <th>Req ID</th>
+                    <th>Requirement Title</th>
+                    <th>Scope & Description</th>
+                    <th>MoSCoW Priority</th>
+                    <th>Target Persona</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>FR-01</strong></td><td>Daily Sales Aggregation</td><td>Ingest settled transactions; compute daily revenue, volume, and orders</td><td><span class="badge-pill bg-danger">Must Have</span></td><td>Sales Director, Mgr</td></tr>
+                  <tr><td><strong>FR-02</strong></td><td>Target vs Actual Quotas</td><td>Calculate variance ($ & %) against regional monthly targets</td><td><span class="badge-pill bg-danger">Must Have</span></td><td>Sales Director, Mgr</td></tr>
+                  <tr><td><strong>FR-03</strong></td><td>Top & Bottom SKUs</td><td>Rank SKUs by revenue contribution and flag underperforming items</td><td><span class="badge-pill bg-danger">Must Have</span></td><td>Sales Director, Analyst</td></tr>
+                  <tr><td><strong>FR-04</strong></td><td>Regional Matrix</td><td>Comparative side-by-side benchmark of all 5 territory zones</td><td><span class="badge-pill bg-danger">Must Have</span></td><td>Sales Director</td></tr>
+                  <tr><td><strong>FR-05</strong></td><td>14% Missing Region Fix</td><td>Execute 4-tier waterfall resolution algorithm for missing region codes</td><td><span class="badge-pill bg-danger">Must Have</span></td><td>Data Analyst, IT</td></tr>
+                  <tr><td><strong>FR-06</strong></td><td>Role-Based Access Control</td><td>Enforce row-level territorial isolation for Regional Managers</td><td><span class="badge-pill bg-danger">Must Have</span></td><td>All Personas</td></tr>
+                  <tr><td><strong>FR-07</strong></td><td>Dynamic Filter Engine</td><td>Filter dashboard instantly by Date Range, Region, and Category</td><td><span class="badge-pill bg-warning">Should Have</span></td><td>Director, Mgr</td></tr>
+                  <tr><td><strong>FR-08</strong></td><td>Data Cleaning Audit Log</td><td>Provide auditable before/after logs with confidence metrics</td><td><span class="badge-pill bg-warning">Should Have</span></td><td>Analyst, IT Admin</td></tr>
+                  <tr><td><strong>FR-09</strong></td><td>Executive PDF/CSV Export</td><td>Generate on-demand 1-page executive briefing PDF with timestamp</td><td><span class="badge-pill bg-info">Could Have</span></td><td>Sales Director</td></tr>
+                  <tr><td><strong>FR-10</strong></td><td>Push Email Digest</td><td>Automated 07:00 AM email notification of previous day's metrics</td><td><span class="badge-pill bg-secondary">Won't Have (P2)</span></td><td>Regional Mgr</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- SEPM TAB 2: UML DIAGRAMS & COHESION -->
+        <!-- ========================================================================= -->
+        <div class="tab-pane" id="tab-uml">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-diagram-project text-primary"></i> UML Software Architecture & Design Package</h2>
+              <p class="view-desc">Structural & Behavioral UML models consistent across Use Cases, Classes, Sequences, Activities, and States.</p>
+            </div>
+            <a href="docs/02_UML_Design_Document.md" target="_blank" class="btn btn-outline btn-sm">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Full UML Markdown
+            </a>
+          </div>
+
+          <!-- UML Architecture Cards -->
+          <div class="grid-2-cols mb-4">
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title"><i class="fa-solid fa-boxes-packing"></i> Architectural Cohesion Justification</span>
+              </div>
+              <div class="card-body text-sm">
+                <p><strong>High Functional Cohesion:</strong></p>
+                <ul>
+                  <li><code>RegionResolutionEngine</code> is dedicated exclusively to resolving geographical attributes using the 4-tier decision hierarchy.</li>
+                  <li><code>QuotaComputationEngine</code> focuses strictly on mathematical variance and attainment algorithms.</li>
+                  <li><code>DashboardController</code> manages only UI state transformation and HTTP response serialization.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title"><i class="fa-solid fa-link-slash"></i> Architectural Coupling Justification</span>
+              </div>
+              <div class="card-body text-sm">
+                <p><strong>Loose Coupling via DTO Contracts:</strong></p>
+                <ul>
+                  <li>The Data Cleaning ETL operates completely decoupled from presentation views. Legacy schema changes do not break dashboard widgets.</li>
+                  <li>Frontend views consume structured REST Data Transfer Objects (<code>DashboardDTO</code>).</li>
+                  <li>RBAC security operates as an independent middleware filter layer.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sequence Diagram Interactive Breakdown -->
+          <div class="card mb-4">
+            <div class="card-header">
+              <span class="card-title"><i class="fa-solid fa-arrows-split-up-and-left"></i> Sequence Flow: "Load Daily Sales and Refresh Dashboard"</span>
+            </div>
+            <div class="card-body">
+              <div class="flow-steps-visual">
+                <div class="flow-step">
+                  <div class="step-num">1</div>
+                  <div class="step-title">02:00 AM Cron</div>
+                  <div class="step-desc">Triggers automated overnight batch extraction.</div>
+                </div>
+                <div class="flow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="flow-step">
+                  <div class="step-num">2</div>
+                  <div class="step-title">Extract Raw Data</div>
+                  <div class="step-desc">Reads settled billing transactions (14% missing regions).</div>
+                </div>
+                <div class="flow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="flow-step">
+                  <div class="step-num">3</div>
+                  <div class="step-title">4-Tier Cleaning</div>
+                  <div class="step-desc">Resolves missing codes via postal/customer/rep directories.</div>
+                </div>
+                <div class="flow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="flow-step">
+                  <div class="step-num">4</div>
+                  <div class="step-title">Load Analytics DW</div>
+                  <div class="step-desc">Bulk upsert clean partitioned records and pre-aggregates.</div>
+                </div>
+                <div class="flow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="flow-step">
+                  <div class="step-num">5</div>
+                  <div class="step-title">07:00 AM UI Query</div>
+                  <div class="step-desc">Director & Managers receive clean KPIs in &lt; 1.5s.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- SEPM TAB 3: PROJECT PLAN, CPM & GANTT -->
+        <!-- ========================================================================= -->
+        <div class="tab-pane" id="tab-cpm">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-network-wired text-primary"></i> Project Plan, CPM & Schedule Management</h2>
+              <p class="view-desc">Critical Path Method (CPM) network analysis, Activity Slack calculations, and 8-Week Gantt schedule.</p>
+            </div>
+            <a href="docs/03_Project_Plan_CPM_Gantt.md" target="_blank" class="btn btn-outline btn-sm">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Full CPM Markdown
+            </a>
+          </div>
+
+          <!-- CPM Activity Table -->
+          <div class="card mb-4">
+            <div class="card-header">
+              <span class="card-title">Activity Precedence, Earliest/Latest Times & Slack Matrix</span>
+              <span class="badge-mini">Team Capacity: 1.5 PD/Day</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Act ID</th>
+                    <th>Activity Description</th>
+                    <th>Duration (Days)</th>
+                    <th>Predecessors</th>
+                    <th>ES</th>
+                    <th>EF</th>
+                    <th>LS</th>
+                    <th>LF</th>
+                    <th>Total Slack</th>
+                    <th>Critical?</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="row-critical">
+                    <td><strong>A</strong></td>
+                    <td>Requirements Elicitation & 9-View Sign-off</td>
+                    <td>2.0</td>
+                    <td>None</td>
+                    <td>0.0</td>
+                    <td>2.0</td>
+                    <td>0.0</td>
+                    <td>2.0</td>
+                    <td><strong>0.0</strong></td>
+                    <td><span class="badge-pill bg-danger">CRITICAL</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>B</strong></td>
+                    <td>Architecture & Database Schema Design</td>
+                    <td>3.0</td>
+                    <td>A</td>
+                    <td>2.0</td>
+                    <td>5.0</td>
+                    <td>4.5</td>
+                    <td>7.5</td>
+                    <td>2.5</td>
+                    <td>Non-Critical</td>
+                  </tr>
+                  <tr class="row-critical">
+                    <td><strong>C</strong></td>
+                    <td>14% Missing Region Cleaning & Mapping</td>
+                    <td>5.5</td>
+                    <td>A</td>
+                    <td>2.0</td>
+                    <td>7.5</td>
+                    <td>2.0</td>
+                    <td>7.5</td>
+                    <td><strong>0.0</strong></td>
+                    <td><span class="badge-pill bg-danger">CRITICAL</span></td>
+                  </tr>
+                  <tr class="row-critical">
+                    <td><strong>D</strong></td>
+                    <td>Automated Overnight ETL Pipeline Build</td>
+                    <td>4.0</td>
+                    <td>B, C</td>
+                    <td>7.5</td>
+                    <td>11.5</td>
+                    <td>7.5</td>
+                    <td>11.5</td>
+                    <td><strong>0.0</strong></td>
+                    <td><span class="badge-pill bg-danger">CRITICAL</span></td>
+                  </tr>
+                  <tr class="row-critical">
+                    <td><strong>E</strong></td>
+                    <td>Views 1-3 Build (Pulse, Targets, Top SKUs)</td>
+                    <td>6.0</td>
+                    <td>D</td>
+                    <td>11.5</td>
+                    <td>17.5</td>
+                    <td>11.5</td>
+                    <td>17.5</td>
+                    <td><strong>0.0</strong></td>
+                    <td><span class="badge-pill bg-danger">CRITICAL</span></td>
+                  </tr>
+                  <tr class="row-critical">
+                    <td><strong>F</strong></td>
+                    <td>Views 4-6 Build (Bottom SKUs, Region Matrix)</td>
+                    <td>6.0</td>
+                    <td>E</td>
+                    <td>17.5</td>
+                    <td>23.5</td>
+                    <td>17.5</td>
+                    <td>23.5</td>
+                    <td><strong>0.0</strong></td>
+                    <td><span class="badge-pill bg-danger">CRITICAL</span></td>
+                  </tr>
+                  <tr class="row-critical">
+                    <td><strong>G</strong></td>
+                    <td>Views 7-9 Build (Categories, Channels, Audit)</td>
+                    <td>6.0</td>
+                    <td>F</td>
+                    <td>23.5</td>
+                    <td>29.5</td>
+                    <td>23.5</td>
+                    <td>29.5</td>
+                    <td><strong>0.0</strong></td>
+                    <td><span class="badge-pill bg-danger">CRITICAL</span></td>
+                  </tr>
+                  <tr class="row-critical">
+                    <td><strong>H</strong></td>
+                    <td>RBAC Security & Dynamic Filter Integration</td>
+                    <td>2.0</td>
+                    <td>G</td>
+                    <td>29.5</td>
+                    <td>31.5</td>
+                    <td>29.5</td>
+                    <td>31.5</td>
+                    <td><strong>0.0</strong></td>
+                    <td><span class="badge-pill bg-danger">CRITICAL</span></td>
+                  </tr>
+                  <tr class="row-critical">
+                    <td><strong>I</strong></td>
+                    <td>Verification, BVA & Decision Table Testing</td>
+                    <td>3.5</td>
+                    <td>H</td>
+                    <td>31.5</td>
+                    <td>35.0</td>
+                    <td>31.5</td>
+                    <td>35.0</td>
+                    <td><strong>0.0</strong></td>
+                    <td><span class="badge-pill bg-danger">CRITICAL</span></td>
+                  </tr>
+                  <tr class="row-critical">
+                    <td><strong>J</strong></td>
+                    <td>User Acceptance Testing (UAT) Signoff</td>
+                    <td>2.0</td>
+                    <td>I</td>
+                    <td>35.0</td>
+                    <td>37.0</td>
+                    <td>35.0</td>
+                    <td>37.0</td>
+                    <td><strong>0.0</strong></td>
+                    <td><span class="badge-pill bg-danger">CRITICAL</span></td>
+                  </tr>
+                  <tr class="row-critical">
+                    <td><strong>K</strong></td>
+                    <td>Production Deployment & Conference Launch</td>
+                    <td>2.0</td>
+                    <td>J</td>
+                    <td>37.0</td>
+                    <td>39.0</td>
+                    <td>37.0</td>
+                    <td>39.0</td>
+                    <td><strong>0.0</strong></td>
+                    <td><span class="badge-pill bg-danger">CRITICAL</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- SEPM TAB 4: ESTIMATION SHEET (9 VS 26 VIEWS) -->
+        <!-- ========================================================================= -->
+        <div class="tab-pane" id="tab-estimation">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-calculator text-primary"></i> Software Effort & Duration Estimation Sheet</h2>
+              <p class="view-desc">Mathematical proof of feasibility: comparing the 9-view scope against the full 26-report legacy catalog.</p>
+            </div>
+            <a href="docs/04_Estimation_Sheet.md" target="_blank" class="btn btn-outline btn-sm">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Full Estimation Markdown
+            </a>
+          </div>
+
+          <!-- Mathematical Formula Cards -->
+          <div class="grid-2-cols mb-4">
+            <div class="card">
+              <div class="card-header bg-highlight-blue">
+                <span class="card-title">Mathematical Formulas</span>
+              </div>
+              <div class="card-body font-mono text-sm">
+                <p><strong>1. Total Effort:</strong><br> E = E_cleaning + (N * e_view) + E_testing</p>
+                <p><strong>2. Team Capacity:</strong><br> C = FTE_Dev + FTE_Analyst = 1.0 + 0.5 = 1.5 PD/Day</p>
+                <p><strong>3. Project Duration:</strong><br> D = E / C (Working Days)</p>
+                <p><strong>4. Calendar Weeks:</strong><br> W = D / 5 (Weeks)</p>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header bg-highlight-green">
+                <span class="card-title">Why an Estimate is Not a Promise</span>
+              </div>
+              <div class="card-body text-sm">
+                <ul>
+                  <li><strong>Cone of Uncertainty:</strong> Estimates early in inception carry variance until requirements are fixed.</li>
+                  <li><strong>Brooks' Law:</strong> Adding staff to a late project increases communication overhead and delays delivery.</li>
+                  <li><strong>Contingency Reserve:</strong> The 2.67-week buffer absorbs legacy edge cases.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comparative Estimation Table -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Detailed Mathematical Proof: 9-View In-Scope vs 26-Report Legacy Scope</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Parameter / Computation</th>
+                    <th>Target 9-View Dashboard Scope</th>
+                    <th>Full 26-Report Legacy Scope</th>
+                    <th>Variance / Delta</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Number of Views / Reports ($N$)</td>
+                    <td><strong>9 Views</strong> (Validated Active)</td>
+                    <td><strong>26 Reports</strong> (Legacy Catalog)</td>
+                    <td>-17 Reports Excluded</td>
+                  </tr>
+                  <tr>
+                    <td>Effort per View ($e_v$)</td>
+                    <td>3.0 Person-Days</td>
+                    <td>3.0 Person-Days</td>
+                    <td>Constant</td>
+                  </tr>
+                  <tr>
+                    <td>View Development Effort ($E_v$)</td>
+                    <td>$9 \times 3 = \mathbf{27.0 \text{ Person-Days}}$</td>
+                    <td>$26 \times 3 = \mathbf{78.0 \text{ Person-Days}}$</td>
+                    <td><strong>-51.0 Person-Days Saved!</strong></td>
+                  </tr>
+                  <tr>
+                    <td>14% Region Cleaning Effort ($E_c$)</td>
+                    <td>8.0 Person-Days</td>
+                    <td>8.0 Person-Days</td>
+                    <td>Constant</td>
+                  </tr>
+                  <tr>
+                    <td>Verification & QA Testing ($E_t$)</td>
+                    <td>5.0 Person-Days</td>
+                    <td>5.0 Person-Days</td>
+                    <td>Constant</td>
+                  </tr>
+                  <tr class="table-row-total">
+                    <td><strong>TOTAL EFFORT ($E$)</strong></td>
+                    <td><strong>40.0 Person-Days</strong></td>
+                    <td><strong>91.0 Person-Days</strong></td>
+                    <td><strong>-51.0 Person-Days</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Team Capacity ($C$)</td>
+                    <td>1.5 Person-Days / Day</td>
+                    <td>1.5 Person-Days / Day</td>
+                    <td>Constant</td>
+                  </tr>
+                  <tr class="table-row-total">
+                    <td><strong>TOTAL WORKING DURATION ($D = E / C$)</strong></td>
+                    <td><strong>26.67 Working Days</strong></td>
+                    <td><strong>60.67 Working Days</strong></td>
+                    <td><strong>-34.0 Working Days</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Duration in Weeks ($W = D / 5$)</td>
+                    <td><strong>5.33 Weeks ($\approx 5.4$)</strong></td>
+                    <td><strong>12.13 Weeks ($\approx 12.2$)</strong></td>
+                    <td><strong>-6.80 Weeks Saved</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Target Conference Deadline</td>
+                    <td>8.00 Weeks (40 Days)</td>
+                    <td>8.00 Weeks (40 Days)</td>
+                    <td>Target</td>
+                  </tr>
+                  <tr class="table-row-conclusion">
+                    <td><strong>FEASIBILITY VERDICT</strong></td>
+                    <td><span class="badge-pill bg-success"><i class="fa-solid fa-check"></i> FEASIBLE (+2.67 Wk Buffer)</span></td>
+                    <td><span class="badge-pill bg-danger"><i class="fa-solid fa-xmark"></i> UNFEASIBLE (-4.13 Wks Overdue)</span></td>
+                    <td><strong>Scope Reduction is Proven Necessary</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- SEPM TAB 5: TESTING, BVA, ECP, DECISION TABLES & METRICS -->
+        <!-- ========================================================================= -->
+        <div class="tab-pane" id="tab-testing">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-vial-circle-check text-primary"></i> Software Testing, QA & Quality Metrics</h2>
+              <p class="view-desc">Boundary Value Analysis (BVA), 4-tier Decision Tables, Defect Removal Efficiency (DRE), and Defect Density.</p>
+            </div>
+            <a href="docs/05_Testing_QA_Plan.md" target="_blank" class="btn btn-outline btn-sm">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Full QA Markdown
+            </a>
+          </div>
+
+          <!-- Quality Metrics Formulas -->
+          <div class="grid-2-cols mb-4">
+            <div class="card">
+              <div class="card-header bg-highlight-green">
+                <span class="card-title">Defect Removal Efficiency (DRE)</span>
+              </div>
+              <div class="card-body font-mono text-sm">
+                <p><strong>Formula:</strong> DRE = [D_internal / (D_internal + D_external)] * 100%</p>
+                <p><strong>Project Data:</strong> D_internal = 17, D_external = 1</p>
+                <p><strong>Result:</strong> DRE = [17 / (17 + 1)] * 100% = <span class="badge-pill bg-success font-bold">94.44%</span> (Benchmark: &ge;90%)</p>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header bg-highlight-blue">
+                <span class="card-title">Defect Density (DD)</span>
+              </div>
+              <div class="card-body font-mono text-sm">
+                <p><strong>Formula:</strong> DD = Total Defects / Software Size</p>
+                <p><strong>Per View:</strong> 17 / 9 = <span class="badge-pill bg-info font-bold">1.89 Defects / View</span></p>
+                <p><strong>Per KLOC:</strong> 17 / 3.2 = <span class="badge-pill bg-info font-bold">5.31 Defects / KLOC</span> (Industry Norm: 3-8)</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4-Tier Decision Table for 14% Missing Region Codes -->
+          <div class="card mb-4">
+            <div class="card-header">
+              <span class="card-title">4-Tier Decision Table for 14% Missing Region Code Rules</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Rule Conditions & Actions</th>
+                    <th>R1 (86%)</th>
+                    <th>R2 (10%)</th>
+                    <th>R3</th>
+                    <th>R4</th>
+                    <th>R5 (3%)</th>
+                    <th>R6</th>
+                    <th>R7 (0.7%)</th>
+                    <th>R8 (0.3%)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>C1: Raw Region Code Present?</strong></td><td>Y</td><td>N</td><td>N</td><td>N</td><td>N</td><td>N</td><td>N</td><td>N</td></tr>
+                  <tr><td><strong>C2: Postal Code in Postal Master?</strong></td><td>-</td><td>Y</td><td>Y</td><td>Y</td><td>N</td><td>N</td><td>N</td><td>N</td></tr>
+                  <tr><td><strong>C3: Customer Master Record Found?</strong></td><td>-</td><td>Y</td><td>N</td><td>-</td><td>Y</td><td>Y</td><td>N</td><td>N</td></tr>
+                  <tr><td><strong>C4: Active Sales Rep Assigned?</strong></td><td>-</td><td>-</td><td>-</td><td>-</td><td>Y</td><td>N</td><td>Y</td><td>N</td></tr>
+                  <tr class="table-action-row"><td><strong>A1: Use Direct Raw Region</strong></td><td><i class="fa-solid fa-check text-success"></i></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                  <tr class="table-action-row"><td><strong>A2: Map via Postal Code (Priority 1)</strong></td><td></td><td><i class="fa-solid fa-check text-success"></i></td><td><i class="fa-solid fa-check text-success"></i></td><td><i class="fa-solid fa-check text-success"></i></td><td></td><td></td><td></td><td></td></tr>
+                  <tr class="table-action-row"><td><strong>A3: Map via Customer Master (Priority 2)</strong></td><td></td><td></td><td></td><td></td><td><i class="fa-solid fa-check text-success"></i></td><td><i class="fa-solid fa-check text-success"></i></td><td></td><td></td></tr>
+                  <tr class="table-action-row"><td><strong>A4: Map via Sales Rep Territory (Priority 3)</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td><i class="fa-solid fa-check text-success"></i></td><td></td></tr>
+                  <tr class="table-action-row"><td><strong>A5: Route to 'Unassigned-Audit Queue' (Fallback)</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><i class="fa-solid fa-check text-warning"></i></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- SEPM TAB 6: RISK REGISTER, RMMM & ISSUE LOG -->
+        <!-- ========================================================================= -->
+        <div class="tab-pane" id="tab-risks">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-shield-halved text-primary"></i> Risk Management, RMMM & Historical Issue Log</h2>
+              <p class="view-desc">Risk Exposure scoring (P x I), proactive RMMM plans for top risks, and historical issue resolution.</p>
+            </div>
+            <a href="docs/06_Risk_Register_RMMM_Closure.md" target="_blank" class="btn btn-outline btn-sm">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Full Risk Markdown
+            </a>
+          </div>
+
+          <!-- Risk Register Table -->
+          <div class="card mb-4">
+            <div class="card-header">
+              <span class="card-title">Risk Register & Exposure Ranking (RE = P x I)</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Risk ID</th>
+                    <th>Risk Description</th>
+                    <th>Prob (1-5)</th>
+                    <th>Impact (1-5)</th>
+                    <th>Exposure (P x I)</th>
+                    <th>Rank</th>
+                    <th>Mitigation Strategy</th>
+                    <th>Owner</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="row-critical">
+                    <td><strong>R1</strong></td>
+                    <td>14% Missing Region Data Cleaning Complexity</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td><strong>20</strong></td>
+                    <td><strong>#1</strong></td>
+                    <td>Automated 4-tier decision table & audit log queue</td>
+                    <td>BI Dev / Analyst</td>
+                  </tr>
+                  <tr class="row-critical">
+                    <td><strong>R2</strong></td>
+                    <td>Annual Sales Conference Deadline (8 Weeks)</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td><strong>20</strong></td>
+                    <td><strong>#2</strong></td>
+                    <td>Strictly prune scope from 26 to 9 views (saves 51 PD)</td>
+                    <td>Project Manager</td>
+                  </tr>
+                  <tr class="row-critical">
+                    <td><strong>R3</strong></td>
+                    <td>Analyst Fear of Replacement / Resistance</td>
+                    <td>4</td>
+                    <td>4</td>
+                    <td><strong>16</strong></td>
+                    <td><strong>#3</strong></td>
+                    <td>Upskill analysts to Data Quality Governors</td>
+                    <td>Sales Director</td>
+                  </tr>
+                  <tr>
+                    <td><strong>R4</strong></td>
+                    <td>Legacy Billing System Schema Inconsistencies</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>12</td>
+                    <td>#4</td>
+                    <td>Read-only overnight batch ETL staging table</td>
+                    <td>IT Systems Admin</td>
+                  </tr>
+                  <tr>
+                    <td><strong>R5</strong></td>
+                    <td>Scope Creep from Regional Managers</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>12</td>
+                    <td>#5</td>
+                    <td>Formal change control committee & Phase 2 backlog</td>
+                    <td>Project Manager</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Historical Issue Log -->
+          <div class="card">
+            <div class="card-header bg-highlight-red">
+              <span class="card-title"><i class="fa-solid fa-triangle-exclamation"></i> Historical Issue Log (Materialized Problems & Resolution)</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table compact-table">
+                <thead>
+                  <tr>
+                    <th>Issue ID</th>
+                    <th>Materialized Problem Description</th>
+                    <th>Root Cause</th>
+                    <th>Engineering Remediation</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>ISS-01</strong></td>
+                    <td>Conflicting sales figures across regional managers every Monday.</td>
+                    <td>Two analysts applied different ad-hoc Excel formulas over weekends.</td>
+                    <td>Replaced with automated single-source deterministic ETL aggregation engine (FR-01).</td>
+                    <td><span class="badge-pill bg-success">RESOLVED</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>ISS-02</strong></td>
+                    <td>Analyst weekend burnout compiling 40-page static PDFs.</td>
+                    <td>100% manual data entry and formatting every Saturday/Sunday.</td>
+                    <td>Eliminated manual compilation; dashboard updates automatically overnight.</td>
+                    <td><span class="badge-pill bg-success">RESOLVED</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>ISS-03</strong></td>
+                    <td>14% of billing transactions distorted regional quotas.</td>
+                    <td>Legacy billing UI did not enforce mandatory region codes on invoice creation.</td>
+                    <td>4-tier postal and customer fallback mapping algorithm resolves 99.7% of missing records.</td>
+                    <td><span class="badge-pill bg-success">RESOLVED</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

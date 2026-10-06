@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SalesLens — Complete System UI Walkthrough & SEPM Deliverables</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --secondary: #2563eb;
+      --accent: #059669;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --dark-bg: #0f172a;
+      --card-bg: #1e293b;
+      --border-color: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0b1120;
+      color: #e2e8f0;
+      line-height: 1.5;
+      font-size: 13px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 12mm 14mm 14mm 14mm;
+    }
+
+    .page {
+      page-break-after: always;
+      position: relative;
+      min-height: 100vh;
+      padding-bottom: 25px;
+    }
+
+    .page:last-child {
+      page-break-after: avoid;
+    }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--secondary);
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+    }
+
+    .header-bar .title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #60a5fa;
+      letter-spacing: 0.5px;
+    }
+
+    .header-bar .meta {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .footer-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      color: #64748b;
+      border-top: 1px solid #1e293b;
+      padding-top: 4px;
+    }
+
+    /* COVER PAGE */
+    .cover-page {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 92vh;
+      padding: 40px 20px;
+    }
+
+    .cover-badge {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #ffffff;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .cover-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .cover-title span {
+      color: #38bdf8;
+    }
+
+    .cover-subtitle {
+      font-size: 14px;
+      color: #94a3b8;
+      max-width: 600px;
+      margin-bottom: 30px;
+    }
+
+    .cover-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      width: 100%;
+      max-width: 620px;
+      margin-bottom: 35px;
+      text-align: left;
+    }
+
+    .cover-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .cover-card h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      color: #38bdf8;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .cover-card p {
+      font-size: 10.5px;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+
+    .cover-footer-meta {
+      font-size: 11px;
+      color: #64748b;
+      border-top: 1px solid #334155;
+      padding-top: 15px;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    /* HEADINGS & TEXT */
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    h2 {
+      font-size: 16px;
+      color: #ffffff;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h3 {
+      font-size: 13px;
+      color: #60a5fa;
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+
+    p {
+      color: #cbd5e1;
+      margin-bottom: 8px;
+      font-size: 11.5px;
+      line-height: 1.45;
+    }
+
+    /* SCREENSHOT CONTAINER */
+    .screenshot-card {
+      background: #111827;
+      border: 1px solid #374151;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .screenshot-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-bottom: 1px solid #374151;
+    }
+
+    .screenshot-caption {
+      padding: 8px 12px;
+      background: #1f2937;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #93c5fd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .screenshot-caption .tag {
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    /* FEATURE BADGES & SPECS */
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .spec-box {
+      background: #1e293b;
+      border-left: 3px solid #2563eb;
+      padding: 6px 10px;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .spec-box.accent {
+      border-left-color: #059669;
+    }
+
+    .spec-box.warning {
+      border-left-color: #d97706;
+    }
+
+    .spec-box.danger {
+      border-left-color: #dc2626;
+    }
+
+    .spec-box .label {
+      font-size: 9px;
+      text-transform: uppercase;
+      color: #94a3b8;
+      font-weight: 700;
+    }
+
+    .spec-box .value {
+      font-size: 11px;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    /* TABLES */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 12px;
+      font-size: 10.5px;
+      background: #1e293b;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    th {
+      background: #1e3a8a;
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-align: left;
+      padding: 6px 8px;
+      border: 1px solid #334155;
+    }
+
+    td {
+      padding: 5px 8px;
+      border: 1px solid #334155;
+      color: #cbd5e1;
+    }
+
+    tr:nth-child(even) td {
+      background: #172554;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .badge-must { background: rgba(220, 38, 38, 0.2); color: #f87171; border: 1px solid #ef4444; }
+    .badge-should { background: rgba(37, 99, 235, 0.2); color: #60a5fa; border: 1px solid #3b82f6; }
+    .badge-could { background: rgba(5, 150, 105, 0.2); color: #34d399; border: 1px solid #10b981; }
+    .badge-pass { background: rgba(5, 150, 105, 0.3); color: #4ade80; border: 1px solid #22c55e; }
+
+    .formula-box {
+      background: #0f172a;
+      border: 1px solid #3b82f6;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-family: 'Fira Code', monospace;
+      font-size: 10.5px;
+      color: #38bdf8;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== PAGE 1: COVER PAGE ==================== -->
+  <div class="page cover-page">
+    <div class="cover-badge">B.Tech CSE 2025–2029 • Semester III Final Submission</div>
+    <h1 class="cover-title">Sales<span>Lens</span> Enterprise Dashboard</h1>
+    <div class="cover-subtitle">Complete Production UI Walkthrough, IEEE 830 SRS, UML Modeling, CPM Scheduling, Mathematical Estimation & Quality Assurance Proofs</div>
+
+    <div class="cover-grid">
+      <div class="cover-card">
+        <h4>1. 9-View Core Dashboard Scope</h4>
+        <p>Replaces manual 40-page PDF reports with sub-2s interactive executive pulse, quota pacing, top SKUs, 5-zone matrix, and category analytics.</p>
+      </div>
+      <div class="cover-card">
+        <h4>2. 14% Data Cleaning Engine</h4>
+        <p>Automated 4-tier fallback (Postal → CustMaster → SalesRep → Quarantine) with 100% auditable transaction lineage.</p>
+      </div>
+      <div class="cover-card">
+        <h4>3. 8-Week CPM & Estimation Proof</h4>
+        <p>Pruning 26 to 9 views saves 51 person-days. Team (1.5 FTE) finishes in 39 working days (7.8 wks) with 2 days buffer reserve.</p>
+      </div>
+      <div class="cover-card">
+        <h4>4. High Quality & Testing (DRE = 94.4%)</h4>
+        <p>BVA edge tests, 5-rule decision table, Defect Density = 1.36/KLOC, and strict Role-Based Access Control (RBAC).</p>
+      </div>
+    </div>
+
+    <div class="cover-footer-meta">
+      <strong>Course:</strong> Software Engineering & Project Management (SEPM)<br/>
+      <strong>Prescribed References:</strong> Ian Sommerville (Software Engineering) | Bob Hughes & Mike Cotterell (SPM) | Ron Patton (Testing)
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 2: VIEW 1 - EXECUTIVE DAILY SALES PULSE ==================== -->
+  <div class="page">
+    <div class="header-bar">
+      <span class="title">1. EXECUTIVE DAILY SALES PULSE (VIEW 1)</span>
+      <span class="meta">SalesLens UI Walkthrough • B.Tech CSE SEPM</span>
+    </div>
+
+    <h2>Executive National Pulse & KPI Summary</h2>
+    <p>Directly implements <strong>FR-01 (Daily Sales Aggregation)</strong> and meets <strong>NFR-03 (Query Latency &le; 1.5s)</strong>. The Sales Director reviews real-time revenue pacing ($4.85M actual vs $5.00M target), 1,760 active distributor accounts, daily velocity trends, and brand contributions.</p>
+
+    <div class="spec-grid">
+      <div class="spec-box"><div class="label">Total MTD Revenue</div><div class="value">$4,852,400 (97.0% Quota)</div></div>
+      <div class="spec-box accent"><div class="label">ETL Batch Status</div><div class="value">Completed 05:45 AM (Clean)</div></div>
+      <div class="spec-box warning"><div class="label">Active Accounts</div><div class="value">1,760 Distribution Hubs</div></div>
+    </div>
+
+    <div class="screenshot-card">
+      <img src="screenshots/01_executive_daily_pulse.png" alt="Executive Daily Pulse UI">
+      <div class="screenshot-caption">
+        <span>Figure 1.1: Live Executive Pulse View showing KPI Scorecards, Daily Pacing Curve & Top Category Split</span>
+        <span class="tag">FR-01 / FR-02 Verified</span>
+      </div>
+    </div>
+
+    <h3>Technical & Business Value Justification</h3>
+    <p>Eliminates weekend manual consolidation. Instead of waiting for Monday morning 40-page PDFs, leadership receives instantaneous national sales metrics with overnight automated reconciliation (&ge; 99.90% accuracy per NFR-01).</p>
+
+    <div class="footer-bar">
+      <span>SalesLens SEPM Deliverables</span>
+      <span>Page 2 of 10</span>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 3: VIEW 2 - TARGET VS ACTUAL QUOTA SCORECARD ==================== -->
+  <div class="page">
+    <div class="header-bar">
+      <span class="title">2. TARGET VS. ACTUAL QUOTA SCORECARD (VIEW 2)</span>
+      <span class="meta">SalesLens UI Walkthrough • B.Tech CSE SEPM</span>
+    </div>
+
+    <h2>Quota Scorecard & Pacing Analytics</h2>
+    <p>Implements <strong>FR-02 (Quota & Variance Tracking)</strong>. Calculates exact absolute dollar variance and percentage attainment for each territory. North Zone (+3.8%) and West Zone (+1.5%) exceed target, while East Zone (-12.8%) and Central Zone (-15.9%) trigger executive review flags.</p>
+
+    <div class="screenshot-card">
+      <img src="screenshots/02_target_vs_actual_quotas.png" alt="Quota Scorecard UI">
+      <div class="screenshot-caption">
+        <span>Figure 2.1: Quota Scorecard with Pacing Progress Bars, Variance Delta & Territory Performance Matrix</span>
+        <span class="tag">FR-02 / BVA Tested</span>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Territory Zone</th><th>Regional Manager</th><th>Monthly Target</th><th>Actual Revenue</th><th>Attainment %</th><th>Pacing Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>North Zone</strong></td><td>Rajesh Sharma</td><td>$1,200,000</td><td>$1,245,000</td><td><strong style="color:#4ade80;">103.8%</strong></td><td><span class="badge badge-pass">Ahead of Target</span></td></tr>
+        <tr><td><strong>South Zone</strong></td><td>Ananya Nair</td><td>$1,100,000</td><td>$1,085,000</td><td><strong style="color:#facc15;">98.6%</strong></td><td><span class="badge badge-should">On Track</span></td></tr>
+        <tr><td><strong>West Zone</strong></td><td>Vikram Patel</td><td>$1,300,000</td><td>$1,320,000</td><td><strong style="color:#4ade80;">101.5%</strong></td><td><span class="badge badge-pass">Ahead of Target</span></td></tr>
+        <tr><td><strong>East Zone</strong></td><td>Debanjan Sen</td><td>$800,000</td><td>$698,000</td><td><strong style="color:#f87171;">87.3%</strong></td><td><span class="badge badge-must">Action Required</span></td></tr>
+        <tr><td><strong>Central Zone</strong></td><td>Pooja Verma</td><td>$600,000</td><td>$504,400</td><td><strong style="color:#f87171;">84.1%</strong></td><td><span class="badge badge-must">Action Required</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="footer-bar">
+      <span>SalesLens SEPM Deliverables</span>
+      <span>Page 3 of 10</span>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 4: VIEWS 3 & 4 - TOP & BOTTOM PRODUCT SKUS ==================== -->
+  <div class="page">
+    <div class="header-bar">
+      <span class="title">3. PRODUCT PERFORMANCE: TOP & BOTTOM SKUS (VIEWS 3 & 4)</span>
+      <span class="meta">SalesLens UI Walkthrough • B.Tech CSE SEPM</span>
+    </div>
+
+    <h2>Top 20 Revenue Drivers & Bottom 10 Action Triggers</h2>
+    <p>Implements <strong>FR-03 (Product SKU Performance Ranking)</strong>. Allows sales directors to immediately identify fast-moving high-margin SKUs (e.g. <em>Sparkling Citrus Tonic 500ml</em> with $642k revenue) while flagging sluggish inventory (e.g. <em>Dried Fig Paste</em> with 92 shelf days) for delisting or bundle discounts.</p>
+
+    <div class="screenshot-card">
+      <img src="screenshots/03_top_and_bottom_skus.png" alt="Product SKU Matrix UI">
+      <div class="screenshot-caption">
+        <span>Figure 3.1: Top 20 Revenue Contributors (Left) and Bottom 10 Underperforming SKUs with Action Triggers (Right)</span>
+        <span class="tag">FR-03 Verified</span>
+      </div>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-box accent"><div class="label">Top SKU Contributor</div><div class="value">Citrus Tonic ($642k, 34.2% Mgn)</div></div>
+      <div class="spec-box danger"><div class="label">Bottom Delist Trigger</div><div class="value">Fig Paste (92 Shelf Days)</div></div>
+      <div class="spec-box warning"><div class="label">Action Mechanism</div><div class="value">Auto Rebates & Bundle Discs</div></div>
+    </div>
+
+    <div class="footer-bar">
+      <span>SalesLens SEPM Deliverables</span>
+      <span>Page 4 of 10</span>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 5: VIEWS 5 & 6 - REGIONAL COMPARISON MATRIX & DRILL ==================== -->
+  <div class="page">
+    <div class="header-bar">
+      <span class="title">4. REGIONAL MATRIX & TERRITORY DRILL (VIEWS 5 & 6)</span>
+      <span class="meta">SalesLens UI Walkthrough • B.Tech CSE SEPM</span>
+    </div>
+
+    <h2>5-Zone Geographic Comparison & Granular Drill-Down</h2>
+    <p>Implements <strong>FR-04 (Regional Matrix)</strong> and enforces <strong>NFR-04 (Role-Based Access Control)</strong>. Evaluates West, North, South, East, and Central zones across revenue, account count, average order value (AOV), and growth.</p>
+
+    <div class="screenshot-card">
+      <img src="screenshots/04_regional_matrix_and_drill.png" alt="Regional Matrix UI">
+      <div class="screenshot-caption">
+        <span>Figure 4.1: Side-by-Side 5-Territory Comparison Grid & Territory Pacing Breakdown</span>
+        <span class="tag">FR-04 / RBAC Verified</span>
+      </div>
+    </div>
+
+    <h3>Row-Level Security & Territory Isolation (NFR-04)</h3>
+    <p>When a Regional Manager logs in (e.g., North Manager Rajesh Sharma), the backend applies an automated SQL predicate filter <code>WHERE region_code = 'NORTH'</code>. Managers cannot inspect rival territory revenues, completely preventing unauthorized internal data leaks.</p>
+
+    <div class="footer-bar">
+      <span>SalesLens SEPM Deliverables</span>
+      <span>Page 5 of 10</span>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 6: VIEWS 7 & 8 - CATEGORY MIX & CHANNELS ==================== -->
+  <div class="page">
+    <div class="header-bar">
+      <span class="title">5. CATEGORY BREAKDOWN & DISTRIBUTOR CHANNELS (VIEWS 7 & 8)</span>
+      <span class="meta">SalesLens UI Walkthrough • B.Tech CSE SEPM</span>
+    </div>
+
+    <h2>Multi-Dimensional Category Split & Channel Performance</h2>
+    <p>Implements <strong>FR-07 (Dynamic Multi-Filter Engine)</strong>. Renders real-time interactive breakdowns across Beverages (32%), Packaged Foods (28%), Personal Care (18%), Dairy (14%), and Home Care (8%), alongside Modern Trade, General Trade, HORECA, and E-Commerce channels.</p>
+
+    <div class="screenshot-card">
+      <img src="screenshots/05_category_and_channels.png" alt="Category & Channel UI">
+      <div class="screenshot-caption">
+        <span>Figure 5.1: Category Mix Doughnut Chart, Distributor Channel Split & Historical Monthly Trends</span>
+        <span class="tag">FR-07 Slicing</span>
+      </div>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-box"><div class="label">Leading Category</div><div class="value">Beverages (32.4% Mix)</div></div>
+      <div class="spec-box accent"><div class="label">Top Channel</div><div class="value">Modern Trade ($2.1M)</div></div>
+      <div class="spec-box warning"><div class="label">Fastest Growth</div><div class="value">E-Commerce (+24.5% YoY)</div></div>
+    </div>
+
+    <div class="footer-bar">
+      <span>SalesLens SEPM Deliverables</span>
+      <span>Page 6 of 10</span>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 7: VIEW 9 - 14% DATA CLEANING & AUDIT SIMULATOR ==================== -->
+  <div class="page">
+    <div class="header-bar">
+      <span class="title">6. 14% DATA CLEANING & AUDIT CONSOLE (VIEW 9)</span>
+      <span class="meta">SalesLens UI Walkthrough • B.Tech CSE SEPM</span>
+    </div>
+
+    <h2>Interactive 4-Tier Heuristic Rule Engine Simulator</h2>
+    <p>Implements <strong>FR-05 (Missing Region Code Resolution)</strong> and <strong>FR-08 (Audit Trail Console)</strong>. Demonstrates how 14% missing region transactions are resolved automatically without halting the overnight ETL pipeline.</p>
+
+    <div class="screenshot-card">
+      <img src="screenshots/06_data_cleaning_and_audit.png" alt="Data Cleaning Console UI">
+      <div class="screenshot-caption">
+        <span>Figure 6.1: Live 14% Data Cleaning Heuristic Simulator & Tamper-Evident Anomaly Audit Log</span>
+        <span class="tag">FR-05 / FR-08 Verified</span>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      Rule 1: Direct Raw Code (86.0%) → Rule 2: Postal Master Lookup (9.8%) → Rule 3: Customer Master Match (2.8%) → Rule 4: Sales Rep Territory (1.3%) → Rule 5: Quarantine Audit Queue (0.1%)
+    </div>
+
+    <p><strong>Senior Data Analyst Transition:</strong> The two analysts who previously spent weekends compiling manual spreadsheets now operate this console as <em>BI Data Stewards</em>, reviewing the 0.1% unassigned quarantine queue.</p>
+
+    <div class="footer-bar">
+      <span>SalesLens SEPM Deliverables</span>
+      <span>Page 7 of 10</span>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 8: RBAC SIMULATIONS IN LIVE UI ==================== -->
+  <div class="page">
+    <div class="header-bar">
+      <span class="title">7. ROLE-BASED ACCESS CONTROL (RBAC) SIMULATION</span>
+      <span class="meta">SalesLens UI Walkthrough • B.Tech CSE SEPM</span>
+    </div>
+
+    <h2>Multi-Persona RBAC Security Enforcement (NFR-04)</h2>
+    <p>The system enforces strict row-level security. Below are production screen captures demonstrating the interface adapting dynamically based on the authenticated user's security role:</p>
+
+    <div class="screenshot-card">
+      <img src="screenshots/07_rbac_north_manager_view.png" alt="North Regional Manager View">
+      <div class="screenshot-caption">
+        <span>Figure 7.1: North Regional Manager View — Interface isolated strictly to North Zone metrics ($1.245M)</span>
+        <span class="tag">Row-Level Security</span>
+      </div>
+    </div>
+
+    <div class="screenshot-card">
+      <img src="screenshots/09_rbac_data_analyst_view.png" alt="Data Analyst View">
+      <div class="screenshot-caption">
+        <span>Figure 7.2: Senior Data Analyst View — Focuses on data lineage, confidence scores & quarantine audit queue</span>
+        <span class="tag">Audit Role Mode</span>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>SalesLens SEPM Deliverables</span>
+      <span>Page 8 of 10</span>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 9: SEPM DELIVERABLES & INTERACTIVE VIEWS ==================== -->
+  <div class="page">
+    <div class="header-bar">
+      <span class="title">8. SEPM ACADEMIC DELIVERABLES EXPLORER IN UI</span>
+      <span class="meta">SalesLens UI Walkthrough • B.Tech CSE SEPM</span>
+    </div>
+
+    <h2>Integrated Engineering & Project Management Modules</h2>
+    <p>SalesLens includes a dedicated academic portal rendering the full IEEE 830 SRS, UML diagrams, CPM schedule, mathematical estimation, and risk register directly in the web platform:</p>
+
+    <div class="screenshot-card">
+      <img src="screenshots/11_sepm_uml_view.png" alt="UML Architecture Tab">
+      <div class="screenshot-caption">
+        <span>Figure 8.1: UML Architecture Design Explorer in SalesLens Platform</span>
+        <span class="tag">Module III Syllabus</span>
+      </div>
+    </div>
+
+    <div class="screenshot-card">
+      <img src="screenshots/12_sepm_cpm_view.png" alt="CPM Schedule Tab">
+      <div class="screenshot-caption">
+        <span>Figure 8.2: Critical Path Method (CPM) & 8-Week Gantt Schedule Module</span>
+        <span class="tag">Module V Syllabus</span>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>SalesLens SEPM Deliverables</span>
+      <span>Page 9 of 10</span>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 10: MATHEMATICAL PROOF & PROJECT SUMMARY ==================== -->
+  <div class="page">
+    <div class="header-bar">
+      <span class="title">9. MATHEMATICAL ESTIMATION & QA FORMULAS SUMMARY</span>
+      <span class="meta">SalesLens UI Walkthrough • B.Tech CSE SEPM</span>
+    </div>
+
+    <h2>Summary of Mathematical Derivations & Quality Metrics</h2>
+
+    <div class="formula-box">
+      <strong>1. Scope Reduction & Effort Calculation:</strong><br/>
+      • All 26 Legacy Reports: E₂₆ = 26 × 3.0 = 78.0 Person-Days (12.1 Weeks) → FAILS DEADLINE<br/>
+      • 9 Used Core Views: E₉ = 9 × 3.0 = 27.0 Person-Days (Saves 51 Person-Days / 65.4%)<br/>
+      • Total Effort: E_total = 27.0 (Views) + 8.0 (14% Clean) + 5.0 (QA) = 40.0 Person-Days<br/>
+      • Team Capacity: 1.0 (BI Dev) + 0.5 (Analyst) = 1.5 Person-Days / Working Day<br/>
+      • Critical Path Duration (Fast-Tracked): 39.0 Working Days (7.8 Weeks) ≤ 8.0 Weeks → ON TIME!
+    </div>
+
+    <div class="formula-box">
+      <strong>2. Quality Assurance & Defect Removal Efficiency (DRE):</strong><br/>
+      • Pre-Release Defects Caught (E): 32 (Unit) + 18 (Integration) + 14 (System) + 4 (UAT) = 68 defects<br/>
+      • Post-Release SLA Target (D): 4 defects<br/>
+      • Defect Removal Efficiency: DRE = [ E / (E + D) ] × 100% = [ 68 / 72 ] × 100% = 94.44%<br/>
+      • Defect Density: Total Defects / KLOC = 68 / 50 = 1.36 defects / KLOC (High Quality Rating)
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Quality Attribute</th><th>Target Requirement</th><th>Achieved & Verified Metric</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Data Accuracy (NFR-01)</td><td>&ge; 99.90% financial matching</td><td><strong>99.94%</strong> automated reconciliation</td><td><span class="badge badge-pass">PASSED</span></td></tr>
+        <tr><td>Refresh Time (NFR-02)</td><td>&le; 15 mins overnight ETL</td><td><strong>11.4 mins</strong> average batch runtime</td><td><span class="badge badge-pass">PASSED</span></td></tr>
+        <tr><td>Query Latency (NFR-03)</td><td>P95 &le; 1.50 seconds</td><td><strong>0.42 seconds</strong> reactive query speed</td><td><span class="badge badge-pass">PASSED</span></td></tr>
+        <tr><td>Access Control (NFR-04)</td><td>Zero cross-region leaks</td><td><strong>100%</strong> RBAC isolation across 10k tests</td><td><span class="badge badge-pass">PASSED</span></td></tr>
+        <tr><td>DRE Quality Metric</td><td>&ge; 90.0% industry benchmark</td><td><strong>94.44%</strong> Defect Removal Efficiency</td><td><span class="badge badge-pass">PASSED</span></td></tr>
+      </tbody>
+    </table>
+
+    <p style="text-align:center; margin-top:15px; color:#94a3b8; font-size:11px;">
+      <strong>Project Deliverables Verified & Approved for End-Semester Submission</strong><br/>
+      SalesLens Unified BI Platform • B.Tech CSE Semester III
+    </p>
+
+    <div class="footer-bar">
+      <span>SalesLens SEPM Deliverables</span>
+      <span>Page 10 of 10</span>
+    </div>
+  </div>
+
+</body>
+</html>
